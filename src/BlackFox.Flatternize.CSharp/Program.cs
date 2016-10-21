@@ -72,8 +72,30 @@ namespace Flatternize
         {
             var root = (CompilationUnitSyntax)await doc.GetSyntaxRootAsync();
 
-            var usings = appendTo.Usings.AddRange(root.Usings);
-            var members = appendTo.Members.AddRange(root.Members);
+            var newUsings = root.Usings;
+
+            if (newUsings.Count > 0)
+            {
+                var firstUsing = newUsings.First();
+                var trivia = SyntaxFactory.TriviaList(SyntaxFactory.Comment("\r\n// Usings from " + doc.FilePath + "\r\n"))
+                    .AddRange(firstUsing.GetLeadingTrivia());
+                var newFirstUsing = firstUsing.WithLeadingTrivia(trivia);
+                newUsings = newUsings.Replace(firstUsing, newFirstUsing);
+            }
+
+            var newMembers = root.Members;
+
+            if (newMembers.Count > 0)
+            {
+                var firstMember = newMembers.First();
+                var trivia = SyntaxFactory.TriviaList(SyntaxFactory.Comment("\r\n// Usings from " + doc.FilePath + "\r\n"))
+                    .AddRange(firstMember.GetLeadingTrivia());
+                var newFirstMember = firstMember.WithLeadingTrivia(trivia);
+                newMembers = newMembers.Replace(firstMember, newFirstMember);
+            }
+
+            var usings = appendTo.Usings.AddRange(newUsings);
+            var members = appendTo.Members.AddRange(newMembers);
 
             return appendTo.WithUsings(usings).WithMembers(members);
         }
@@ -87,7 +109,7 @@ namespace Flatternize
 
         private static async Task<Document> DoWork()
         {
-            var path = @"G:\Code\Nancy.Serialization.JsonNet\Nancy.Serialization.JsonNet.sln";
+            var path = @"G:\Code\_ext\Newtonsoft.Json\Src\Newtonsoft.Json.Net40.sln";
             var inputWorkspace = MSBuildWorkspace.Create();
             inputWorkspace.SkipUnrecognizedProjects = false;
             var solution = await inputWorkspace.OpenSolutionAsync(path);
