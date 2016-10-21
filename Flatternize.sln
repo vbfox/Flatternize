@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flatternize", "Flatternize.csproj", "{686C3A1D-0C45-43C5-8DD7-12139683403B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackFox.Flatternize.CSharp", "src\BlackFox.Flatternize.CSharp\BlackFox.Flatternize.CSharp.csproj", "{686C3A1D-0C45-43C5-8DD7-12139683403B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
